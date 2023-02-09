@@ -22,7 +22,7 @@ class SearchFilterApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
+          seedColor: Colors.tealAccent,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
