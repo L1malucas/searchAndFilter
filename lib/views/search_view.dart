@@ -35,7 +35,6 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   void initState() {
-    print('ue');
     _foundUsers = _allUsers;
     super.initState();
   }
@@ -44,17 +43,13 @@ class _SearchViewState extends State<SearchView> {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
       results = _allUsers;
-      print('if');
     } else {
-      print('else');
-
       results = _allUsers
           .where((user) =>
               user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
     }
     setState(() {
-      print('set');
       _foundUsers = results;
     });
   }
@@ -92,28 +87,21 @@ class _SearchViewState extends State<SearchView> {
                 ),
               ),
             ),
-            Expanded(
-              child: _foundUsers.isNotEmpty
-                  ? SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          childCount: _foundUsers.length, (context, index) {
-                      Card(
-                        key: ValueKey(_foundUsers[index]["id"]),
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: ListTile(
-                          leading: Text(_foundUsers[index]["id"].toString()),
-                          title: Text(_foundUsers[index]["name"]),
-                          subtitle: Text(
-                              '${_foundUsers[index]["age"].toString()} years old'),
-                        ),
-                      );
-                      return null;
-                    }))
-                  : const Center(
-                      child: Text('sem retorno'),
-                    ),
-            ),
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    childCount: _foundUsers.length, (context, index) {
+              return Card(
+                key: ValueKey(_foundUsers[index]["id"]),
+                elevation: 4,
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: ListTile(
+                  leading: Text(_foundUsers[index]["id"].toString()),
+                  title: Text(_foundUsers[index]["name"]),
+                  subtitle:
+                      Text('${_foundUsers[index]["age"].toString()} years old'),
+                ),
+              );
+            }))
           ],
         )),
       ),
