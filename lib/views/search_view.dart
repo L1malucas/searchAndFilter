@@ -8,6 +8,7 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  bool ascendingOrderType = false;
   final List<Map<String, dynamic>> _allUsers = [
     {"id": 1, "name": "Andy", "age": 29},
     {"id": 2, "name": "Aragon", "age": 40},
@@ -54,6 +55,19 @@ class _SearchViewState extends State<SearchView> {
     });
   }
 
+  order(List list, bool ascendingType) {
+    if (ascendingType) {
+      final ordelyList =
+          _foundUsers.sort((a, b) => a["name"].compareTo(b["name"]));
+      // print(ordelyList);
+      return ordelyList;
+    } else {
+      final ordelyList =
+          _foundUsers.sort((a, b) => b["name"].compareTo(a["name"]));
+      return ordelyList;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -64,7 +78,22 @@ class _SearchViewState extends State<SearchView> {
           shrinkWrap: true,
           slivers: [
             SliverAppBar(
-              title: const Text('Search and Filter'),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Search and Filter'),
+                  const Text('Order By'),
+                  IconButton(
+                      onPressed: () {
+                        ascendingOrderType = !ascendingOrderType;
+                        setState(() {});
+                        order(_foundUsers, ascendingOrderType);
+                      },
+                      icon: ascendingOrderType
+                          ? Icon(Icons.arrow_upward)
+                          : Icon(Icons.arrow_downward)),
+                ],
+              ),
               floating: true,
               pinned: true,
               snap: false,
